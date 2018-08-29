@@ -1,52 +1,39 @@
 <template>
-  <div>
-    <nuxt/>
-    <my-footer/>
-  </div>
+  <main class="layout-main" :class="{'header-affix': affix}">
+    <main-header/>
+    <div id="layout-main__page" class="layout-main__page">
+      <nuxt/>
+    </div>
+    <main-footer/>
+  </main>
 </template>
 
 <script>
-import MyFooter from '~/components/Footer.vue'
-
-export default {
-  components: {
-    MyFooter
+  import MainHeader from '~/components/MainHeader.vue'
+  import MainFooter from '~/components/Footer.vue'
+  export default {
+    data () {
+      return {
+        affix: false
+      }
+    },
+    components: {
+      MainHeader,
+      MainFooter
+    },
+    computed: {
+    },
+    mounted () {
+      this.$events.$on('header-affixtop', (payload) => {
+        this.affix = false
+      })
+      this.$events.$on('header-affix', (payload) => {
+        this.affix = true
+      })
+    }
   }
-}
 </script>
 
-<style>
-.container
-{
-  margin: 0;
-  width: 100%;
-  padding: 100px 0;
-  text-align: center;
-}
+<style lang="scss">
 
-.button, .button:visited
-{
-  display: inline-block;
-  color: black;
-  letter-spacing: 1px;
-  background-color: #fff;
-  border: 2px solid #000;
-  text-decoration: none;
-  text-transform: uppercase;
-  padding: 15px 45px;
-}
-
-.button:hover, .button:focus
-{
-  color: #fff;
-  background-color: #000;
-}
-
-.title
-{
-  color: #000;
-  font-weight: 300;
-  font-size: 2.5em;
-  margin: 0;
-}
 </style>
